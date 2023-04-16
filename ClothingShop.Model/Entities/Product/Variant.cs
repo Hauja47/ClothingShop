@@ -21,6 +21,6 @@ namespace ClothingShop.Model
 
         public Status Status { get; set; }
 
-        public IEnumerable<AttributeValue>  Attributes { get; set; }
+        public IEnumerable<AttributeValue> Attributes { get; set; }
     }
 }

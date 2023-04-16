@@ -25,6 +25,7 @@ namespace ClothingShop.Server.Auth
                             builder.Configuration.GetConnectionString("ShopConnectionString"),
                             options => options.MigrationsAssembly(assembly))
                         .UseSnakeCaseNamingConvention();
+                    options.DefaultSchema = "IS";
                 })
                 .AddOperationalStore(options =>
                 {
@@ -33,8 +34,11 @@ namespace ClothingShop.Server.Auth
                             builder.Configuration.GetConnectionString("ShopConnectionString"),
                             options => options.MigrationsAssembly(assembly))
                         .UseSnakeCaseNamingConvention();
+                    options.DefaultSchema = "IS";
                 })
                 .AddDeveloperSigningCredential();
+
+            var authConnectionString = builder.Configuration.GetConnectionString("ShopConnectionString");
 
             var app = builder.Build();
 

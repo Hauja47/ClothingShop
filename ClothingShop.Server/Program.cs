@@ -19,7 +19,7 @@ namespace ClothingShop.Server
 
             //builder.Services.AddDbContext<ShopContext>(options =>
             //    options
-            //        .UseNpgsql(builder.Configuration.GetConnectionString("ShopDatabase"))
+            //        .UseNpgsql(builder.Configuration.GetConnectionString("ShopConnectionString"))
             //        .UseSnakeCaseNamingConvention());
 
             var app = builder.Build();
