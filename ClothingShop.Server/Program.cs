@@ -1,5 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace ClothingShop.Server
 {
+    using ClothingShop.DataAccess;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -12,6 +16,11 @@ namespace ClothingShop.Server
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            //builder.Services.AddDbContext<ShopContext>(options =>
+            //    options
+            //        .UseNpgsql(builder.Configuration.GetConnectionString("ShopDatabase"))
+            //        .UseSnakeCaseNamingConvention());
 
             var app = builder.Build();
 

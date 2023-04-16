@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClothingShop.Model
+namespace ClothingShop.Model.Enums
 {
-    internal class BaseEntity
+    public enum Status
     {
+        Enable = 1,
+        Disable = 10
     }
 }
