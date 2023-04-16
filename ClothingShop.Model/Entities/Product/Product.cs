@@ -17,5 +17,7 @@
         public Category Category { get; set; }
 
         public IEnumerable<Comment> Comments { get; set; }
+
+        public IEnumerable<Variant> Variants { get; set; }
     }
 }
