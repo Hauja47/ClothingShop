@@ -1,12 +1,22 @@
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using Newtonsoft.Json.Serialization;
+
+using Newtonsoft.Json;
 
 namespace ClothingShop.Server.Auth
 {
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Model;
+
     public class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 
             // Add services to the container.
 
@@ -15,30 +25,45 @@ namespace ClothingShop.Server.Auth
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var assembly = typeof(Program).Assembly.GetName().Name;
+            builder.Services.AddDbContext<AuthDbContext>(options =>
+            {
+                options
+                    .UseNpgsql(builder.Configuration.GetConnectionString("AuthConnectionString"), options =>
+                    {
+                        options.MigrationsAssembly(migrationsAssembly);
+                    })
+                    .UseSnakeCaseNamingConvention();
+            });
 
-            builder.Services.AddIdentityServer()
-                .AddConfigurationStore(options =>
-                {
-                    options.ConfigureDbContext = dbContextBuilder =>
-                        dbContextBuilder.UseNpgsql(
-                            builder.Configuration.GetConnectionString("ShopConnectionString"),
-                            options => options.MigrationsAssembly(assembly))
-                        .UseSnakeCaseNamingConvention();
-                    options.DefaultSchema = "IS";
-                })
-                .AddOperationalStore(options =>
-                {
-                    options.ConfigureDbContext = dbContextBuilder =>
-                        dbContextBuilder.UseNpgsql(
-                            builder.Configuration.GetConnectionString("ShopConnectionString"),
-                            options => options.MigrationsAssembly(assembly))
-                        .UseSnakeCaseNamingConvention();
-                    options.DefaultSchema = "IS";
-                })
-                .AddDeveloperSigningCredential();
+            builder.Services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<AuthDbContext>();
 
-            var authConnectionString = builder.Configuration.GetConnectionString("ShopConnectionString");
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequiredLength = 8;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+
+                // Signin settings
+                options.SignIn.RequireConfirmedEmail = true;
+            });
+
+            builder.Services
+                .AddControllers(options =>
+                {
+                    options.Filters.Add(new ProducesAttribute("application/json"));
+                })
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
+
+            builder.Services
+                .AddMvcCore()
+                .AddAuthorization();
 
             var app = builder.Build();
 
@@ -50,8 +75,6 @@ namespace ClothingShop.Server.Auth
 
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseIdentityServer();
 
             app.UseHttpsRedirection();
 
