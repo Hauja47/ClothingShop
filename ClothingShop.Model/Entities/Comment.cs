@@ -27,6 +27,6 @@ namespace ClothingShop.Model
         public Comment ParentComment { get; set; }
 
         // TODO: Add User 
-         
+        public User User { get; set; }
     }
 }
