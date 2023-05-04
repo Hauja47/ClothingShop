@@ -24,11 +24,11 @@ namespace ClothingShop.Model
 
         public Guid? UserId { get; set; }
 
-        public IEnumerable<Guid>? UsedUserId { get; set; }
+        //public virtual IEnumerable<Guid> UsedUserId { get; set; }
 
 
-        public User? user;
+        public Person? Person;
 
-        public IEnumerable<User> UsedUsers { get; set; }
+        public IEnumerable<Person> UsedPersons { get; set; }
     }
 }

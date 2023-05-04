@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClothingShop.Model.Entities
+namespace ClothingShop.Model
 {
     public class CartItem : BaseEntity
     {

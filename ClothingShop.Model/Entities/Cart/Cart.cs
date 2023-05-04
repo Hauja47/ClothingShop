@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClothingShop.Model.Entities
+namespace ClothingShop.Model
 {
     public class Cart : BaseEntity
     {
         public Guid UserId { get; set; }
 
-        public User User { get; set; }
+        public Person Person { get; set; }
 
         public IEnumerable<CartItem>? Items { get; set;}
     }

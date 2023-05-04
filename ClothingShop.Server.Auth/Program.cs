@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 using Newtonsoft.Json.Serialization;
 
 using Newtonsoft.Json;
 
 namespace ClothingShop.Server.Auth
 {
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
+    using ClothingShop.Model.Entities;
     using Model;
 
     public class Program
@@ -35,7 +37,7 @@ namespace ClothingShop.Server.Auth
                     .UseSnakeCaseNamingConvention();
             });
 
-            builder.Services.AddIdentity<User, Role>()
+            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<AuthDbContext>();
 
             builder.Services.Configure<IdentityOptions>(options =>

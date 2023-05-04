@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace ClothingShop.Model
 {
-    public class User : IdentityUser<Guid>
+    public class ApplicationRole : IdentityRole<Guid>
     {
-        public string Name { get; set; }
+        public const string ADMIN = "Admin";
 
-        public string Address { get; set; }
+        public const string EMPLOYEE = "Employee";
+
+        public const string CUSTOMER = "Customer";
     }
 }

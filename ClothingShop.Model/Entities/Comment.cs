@@ -26,7 +26,6 @@ namespace ClothingShop.Model
         [ForeignKey("ParentId")]
         public Comment ParentComment { get; set; }
 
-        // TODO: Add User 
-        public User User { get; set; }
+        public Person Person { get; set; }
     }
 }

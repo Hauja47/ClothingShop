@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClothingShop.Model.Entities
+namespace ClothingShop.Model
 {
     public class OrderItem : BaseEntity
     {
@@ -17,7 +17,5 @@ namespace ClothingShop.Model.Entities
         public decimal Discount { get; set; }
 
         public decimal Balance { get; set; }
-
-        public Order Order { get; set; }
     }
 }

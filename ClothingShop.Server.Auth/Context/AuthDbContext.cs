@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace ClothingShop.Server.Auth
 {
-    using Microsoft.EntityFrameworkCore.Design;
+    using ClothingShop.Model.Entities;
     using Model;
 
-    public class AuthDbContext : IdentityDbContext<User, Role, Guid>
+    public class AuthDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
         {
@@ -16,7 +17,7 @@ namespace ClothingShop.Server.Auth
         {
             builder.HasDefaultSchema("Identity");
 
-            builder.Entity<User>()
+            builder.Entity<ApplicationUser>()
                 .Property(x => x.Id)
                 .ValueGeneratedOnAdd()
                 .HasDefaultValueSql("uuid_generate_v4()");

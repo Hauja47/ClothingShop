@@ -1,13 +1,6 @@
-﻿using ClothingShop.Model.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ClothingShop.Model
+﻿namespace ClothingShop.Model
 {
-    public  class Order : BaseEntity 
+    public  class Order : BaseEntity
     {
         public string Address { get; set; }
 
@@ -27,7 +20,7 @@ namespace ClothingShop.Model
 
         public Guid? PromotionId { get; set; }
 
-        public User User { get; set; }
+        public Person Person { get; set; }
 
         public Promotion? Promotion { get; set; }
 
