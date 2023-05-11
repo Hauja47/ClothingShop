@@ -13,7 +13,7 @@ namespace ClothingShop.Model
 
         public string Content { get; set; }
 
-        public List<string> Image { get; set; }
+        public string Images { get; set; }
 
         public decimal Rating { get; set; }
 

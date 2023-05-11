@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -224,7 +223,7 @@ namespace ClothingShop.DataAccess.EF.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "uuid_generate_v4()"),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     content = table.Column<string>(type: "text", nullable: false),
-                    image = table.Column<List<string>>(type: "text[]", nullable: false),
+                    images = table.Column<string>(type: "text", nullable: false),
                     rating = table.Column<decimal>(type: "numeric", nullable: false),
                     like = table.Column<int>(type: "integer", nullable: false),
                     dislike = table.Column<int>(type: "integer", nullable: false),
