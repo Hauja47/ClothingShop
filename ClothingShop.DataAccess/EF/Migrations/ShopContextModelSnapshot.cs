@@ -642,9 +642,9 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("discount");
 
-                    b.Property<List<string>>("Images")
+                    b.Property<string>("Images")
                         .IsRequired()
-                        .HasColumnType("text[]")
+                        .HasColumnType("text")
                         .HasColumnName("images");
 
                     b.Property<decimal>("Price")

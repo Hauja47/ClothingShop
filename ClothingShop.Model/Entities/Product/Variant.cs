@@ -15,7 +15,7 @@ namespace ClothingShop.Model
 
         public decimal Discount { get; set; }
 
-        public IEnumerable<string> Images { get; set; }
+        public string Images { get; set; }
 
         public string Slug { get; set; }
 

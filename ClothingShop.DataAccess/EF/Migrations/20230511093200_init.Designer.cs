@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ClothingShop.DataAccess.EF.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20230430165549_init")]
+    [Migration("20230511093200_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -645,9 +645,9 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("discount");
 
-                    b.Property<List<string>>("Images")
+                    b.Property<string>("Images")
                         .IsRequired()
-                        .HasColumnType("text[]")
+                        .HasColumnType("text")
                         .HasColumnName("images");
 
                     b.Property<decimal>("Price")

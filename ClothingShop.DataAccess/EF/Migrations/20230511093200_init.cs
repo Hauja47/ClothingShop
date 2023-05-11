@@ -265,7 +265,7 @@ namespace ClothingShop.DataAccess.EF.Migrations
                     product_id = table.Column<Guid>(type: "uuid", nullable: false),
                     price = table.Column<decimal>(type: "numeric", nullable: false),
                     discount = table.Column<decimal>(type: "numeric", nullable: false),
-                    images = table.Column<List<string>>(type: "text[]", nullable: false),
+                    images = table.Column<string>(type: "text", nullable: false),
                     slug = table.Column<string>(type: "text", nullable: false),
                     status = table.Column<int>(type: "integer", nullable: false),
                     created_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now() at time zone 'utc'"),
