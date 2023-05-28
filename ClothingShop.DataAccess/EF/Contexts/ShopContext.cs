@@ -1,18 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace ClothingShop.DataAccess
 {
     using ClothingShop.Model;
-    using ClothingShop.Model.Entities;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
-    using System.Reflection;
 
-    public class ShopContext : DbContext
+    public class ShopContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         public ShopContext(DbContextOptions<ShopContext> options) : base(options)
         {
@@ -26,7 +28,6 @@ namespace ClothingShop.DataAccess
         public DbSet<Variant> Variants { get; set; }
 
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Person> Persons { get; set; }
         public DbSet<Promotion> Promotions { get; set; }
 
         public DbSet<Order> Orders { get; set; }
@@ -34,6 +35,7 @@ namespace ClothingShop.DataAccess
 
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

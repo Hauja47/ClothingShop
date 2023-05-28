@@ -10,7 +10,8 @@ namespace ClothingShop.Model
     {
         public Guid UserId { get; set; }
 
-        public Person Person { get; set; }
+        //public Person Person { get; set; }
+        public ApplicationUser User { get; set; }
 
         public IEnumerable<CartItem>? Items { get; set;}
     }

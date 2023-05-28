@@ -8,7 +8,7 @@ namespace ClothingShop.Model
 {
     public enum OrderStatus
     {
-        WaitForConfirmation,
+        WaitForConfirm,
         Confirmed,
         Pending,
         Packaged,

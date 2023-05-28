@@ -20,6 +20,21 @@ namespace ClothingShop.DataAccess.EF.TableDefinations
                 .HasDefaultValueSql("now() at time zone 'utc'")
                 .ValueGeneratedOnAdd()
                 .IsRequired();
+
+            builder
+                .Property(e => e.UpdatedDate)
+                .HasDefaultValueSql("now() at time zone 'utc'")
+                .ValueGeneratedOnUpdate();
+
+            builder
+                .Property(e => e.RecordStatus)
+                .HasDefaultValue(RecordStatus.Active)
+                .ValueGeneratedOnAdd();
+
+            builder
+                .Property(e => e.OrderStatus)
+                .HasDefaultValue(OrderStatus.WaitForConfirm)
+                .ValueGeneratedOnAdd();
         }
     }
 }

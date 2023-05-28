@@ -1,5 +1,6 @@
 ﻿             using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace ClothingShop.Model
 
         public string Content { get; set; }
 
-        public string Images { get; set; }
+        public string? Images { get; set; }
 
         public decimal Rating { get; set; }
 
@@ -21,11 +22,11 @@ namespace ClothingShop.Model
 
         public int Dislike { get; set; }
 
-        public Guid ParentId { get; set; }
+        public Guid? ParentId { get; set; }
 
         [ForeignKey("ParentId")]
-        public Comment ParentComment { get; set; }
+        public Comment? ParentComment { get; set; }
 
-        public Person Person { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

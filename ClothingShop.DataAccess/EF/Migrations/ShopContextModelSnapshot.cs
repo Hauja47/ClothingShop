@@ -23,6 +23,123 @@ namespace ClothingShop.DataAccess.EF.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "uuid-ossp");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ApplicationUserPromotion", b =>
+                {
+                    b.Property<Guid>("UsedPromotionsId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("used_promotions_id");
+
+                    b.Property<Guid>("UsedUsersId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("used_users_id");
+
+                    b.HasKey("UsedPromotionsId", "UsedUsersId")
+                        .HasName("pk_application_user_promotion");
+
+                    b.HasIndex("UsedUsersId")
+                        .HasDatabaseName("ix_application_user_promotion_used_users_id");
+
+                    b.ToTable("application_user_promotion", (string)null);
+                });
+
+            modelBuilder.Entity("ClothingShop.Model.ApplicationUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("access_failed_count");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text")
+                        .HasColumnName("address");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text")
+                        .HasColumnName("concurrency_stamp");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("email");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean")
+                        .HasColumnName("email_confirmed");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("boolean")
+                        .HasColumnName("lockout_enabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("lockout_end");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalized_email");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalized_user_name");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text")
+                        .HasColumnName("phone_number");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("boolean")
+                        .HasColumnName("phone_number_confirmed");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("text")
+                        .HasColumnName("refresh_token");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("refresh_token_expiry_time");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("text")
+                        .HasColumnName("security_stamp");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("boolean")
+                        .HasColumnName("two_factor_enabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("user_name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_asp_net_users");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
             modelBuilder.Entity("ClothingShop.Model.Attribute", b =>
                 {
                     b.Property<Guid>("Id")
@@ -33,7 +150,7 @@ namespace ClothingShop.DataAccess.EF.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_date")
                         .HasDefaultValueSql("now() at time zone 'utc'");
 
@@ -43,15 +160,23 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("name");
 
                     b.Property<int>("RecordStatus")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(1)
                         .HasColumnName("record_status");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_date");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_date")
+                        .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.HasKey("Id")
                         .HasName("pk_attributes");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_attributes_name");
 
                     b.ToTable("attributes", (string)null);
                 });
@@ -70,17 +195,21 @@ namespace ClothingShop.DataAccess.EF.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_date")
                         .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.Property<int>("RecordStatus")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(1)
                         .HasColumnName("record_status");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_date");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_date")
+                        .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.Property<string>("Value")
                         .IsRequired()
@@ -113,7 +242,7 @@ namespace ClothingShop.DataAccess.EF.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_date")
                         .HasDefaultValueSql("now() at time zone 'utc'");
 
@@ -123,15 +252,23 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("name");
 
                     b.Property<int>("RecordStatus")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(1)
                         .HasColumnName("record_status");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_date");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_date")
+                        .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.HasKey("Id")
                         .HasName("pk_brands");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_brands_name");
 
                     b.ToTable("brands", (string)null);
                 });
@@ -146,21 +283,21 @@ namespace ClothingShop.DataAccess.EF.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_date")
                         .HasDefaultValueSql("now() at time zone 'utc'");
 
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("person_id");
-
                     b.Property<int>("RecordStatus")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(1)
                         .HasColumnName("record_status");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_date");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_date")
+                        .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
@@ -169,8 +306,8 @@ namespace ClothingShop.DataAccess.EF.Migrations
                     b.HasKey("Id")
                         .HasName("pk_carts");
 
-                    b.HasIndex("PersonId")
-                        .HasDatabaseName("ix_carts_person_id");
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_carts_user_id");
 
                     b.ToTable("carts", (string)null);
                 });
@@ -189,7 +326,7 @@ namespace ClothingShop.DataAccess.EF.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_date")
                         .HasDefaultValueSql("now() at time zone 'utc'");
 
@@ -198,12 +335,16 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("quantity");
 
                     b.Property<int>("RecordStatus")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(1)
                         .HasColumnName("record_status");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_date");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_date")
+                        .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.Property<Guid>("VariantId")
                         .HasColumnType("uuid")
@@ -231,7 +372,7 @@ namespace ClothingShop.DataAccess.EF.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_date")
                         .HasDefaultValueSql("now() at time zone 'utc'");
 
@@ -241,15 +382,23 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("name");
 
                     b.Property<int>("RecordStatus")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(1)
                         .HasColumnName("record_status");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_date");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_date")
+                        .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.HasKey("Id")
                         .HasName("pk_categories");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_categories_name");
 
                     b.ToTable("categories", (string)null);
                 });
@@ -269,30 +418,29 @@ namespace ClothingShop.DataAccess.EF.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_date")
                         .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.Property<int>("Dislike")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(0)
                         .HasColumnName("dislike");
 
                     b.Property<string>("Images")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("images");
 
                     b.Property<int>("Like")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(0)
                         .HasColumnName("like");
 
-                    b.Property<Guid>("ParentId")
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("uuid")
                         .HasColumnName("parent_id");
-
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("person_id");
 
                     b.Property<Guid?>("ProductId")
                         .HasColumnType("uuid")
@@ -303,12 +451,16 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("rating");
 
                     b.Property<int>("RecordStatus")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(1)
                         .HasColumnName("record_status");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_date");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_date")
+                        .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
@@ -320,11 +472,11 @@ namespace ClothingShop.DataAccess.EF.Migrations
                     b.HasIndex("ParentId")
                         .HasDatabaseName("ix_comments_parent_id");
 
-                    b.HasIndex("PersonId")
-                        .HasDatabaseName("ix_comments_person_id");
-
                     b.HasIndex("ProductId")
                         .HasDatabaseName("ix_comments_product_id");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_comments_user_id");
 
                     b.ToTable("comments", (string)null);
                 });
@@ -348,11 +500,11 @@ namespace ClothingShop.DataAccess.EF.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_date")
                         .HasDefaultValueSql("now() at time zone 'utc'");
 
-                    b.Property<decimal>("Discount")
+                    b.Property<decimal?>("Discount")
                         .HasColumnType("numeric")
                         .HasColumnName("discount");
 
@@ -361,13 +513,16 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnType("text")
                         .HasColumnName("email");
 
-                    b.Property<int>("OrderStatus")
-                        .HasColumnType("integer")
-                        .HasColumnName("order_status");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("person_id");
+                    b.Property<int>("OrderStatus")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0)
+                        .HasColumnName("order_status");
 
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("integer")
@@ -378,7 +533,9 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("promotion_id");
 
                     b.Property<int>("RecordStatus")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(1)
                         .HasColumnName("record_status");
 
                     b.Property<decimal>("Total")
@@ -386,21 +543,23 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("total");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_date");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_date")
+                        .HasDefaultValueSql("now() at time zone 'utc'");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
                         .HasName("pk_orders");
 
-                    b.HasIndex("PersonId")
-                        .HasDatabaseName("ix_orders_person_id");
-
                     b.HasIndex("PromotionId")
                         .HasDatabaseName("ix_orders_promotion_id");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_orders_user_id");
 
                     b.ToTable("orders", (string)null);
                 });
@@ -419,11 +578,11 @@ namespace ClothingShop.DataAccess.EF.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_date")
                         .HasDefaultValueSql("now() at time zone 'utc'");
 
-                    b.Property<decimal>("Discount")
+                    b.Property<decimal?>("Discount")
                         .HasColumnType("numeric")
                         .HasColumnName("discount");
 
@@ -436,7 +595,9 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("quantity");
 
                     b.Property<int>("RecordStatus")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(1)
                         .HasColumnName("record_status");
 
                     b.Property<decimal>("Total")
@@ -444,8 +605,10 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("total");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_date");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_date")
+                        .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.HasKey("Id")
                         .HasName("pk_order_items");
@@ -456,48 +619,6 @@ namespace ClothingShop.DataAccess.EF.Migrations
                     b.ToTable("order_items", (string)null);
                 });
 
-            modelBuilder.Entity("ClothingShop.Model.Person", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id")
-                        .HasDefaultValueSql("uuid_generate_v4()");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("address");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_date")
-                        .HasDefaultValueSql("now() at time zone 'utc'");
-
-                    b.Property<Guid>("IdentityId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("identity_id");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.Property<int>("RecordStatus")
-                        .HasColumnType("integer")
-                        .HasColumnName("record_status");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_date");
-
-                    b.HasKey("Id")
-                        .HasName("pk_persons");
-
-                    b.ToTable("persons", (string)null);
-                });
-
             modelBuilder.Entity("ClothingShop.Model.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -505,6 +626,10 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id")
                         .HasDefaultValueSql("uuid_generate_v4()");
+
+                    b.Property<Guid?>("ApplicationUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("application_user_id");
 
                     b.Property<Guid>("BrandId")
                         .HasColumnType("uuid")
@@ -516,12 +641,11 @@ namespace ClothingShop.DataAccess.EF.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_date")
                         .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("description");
 
@@ -530,33 +654,33 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<Guid?>("PersonId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("person_id");
-
-                    b.Property<decimal>("Rating")
+                    b.Property<decimal?>("Rating")
                         .HasColumnType("numeric")
                         .HasColumnName("rating");
 
                     b.Property<int>("RecordStatus")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(1)
                         .HasColumnName("record_status");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_date");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_date")
+                        .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.HasKey("Id")
                         .HasName("pk_products");
+
+                    b.HasIndex("ApplicationUserId")
+                        .HasDatabaseName("ix_products_application_user_id");
 
                     b.HasIndex("BrandId")
                         .HasDatabaseName("ix_products_brand_id");
 
                     b.HasIndex("CategoryId")
                         .HasDatabaseName("ix_products_category_id");
-
-                    b.HasIndex("PersonId")
-                        .HasDatabaseName("ix_products_person_id");
 
                     b.ToTable("products", (string)null);
                 });
@@ -575,13 +699,12 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("code");
 
                     b.Property<string>("Condition")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("condition");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_date")
                         .HasDefaultValueSql("now() at time zone 'utc'");
 
@@ -594,11 +717,13 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("discount_value");
 
                     b.Property<DateTime>("ExpiredDate")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("expired_date");
 
                     b.Property<bool>("IsPublished")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
+                        .HasDefaultValue(false)
                         .HasColumnName("is_published");
 
                     b.Property<long>("Quantity")
@@ -606,12 +731,16 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("quantity");
 
                     b.Property<int>("RecordStatus")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(1)
                         .HasColumnName("record_status");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_date");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_date")
+                        .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uuid")
@@ -633,16 +762,15 @@ namespace ClothingShop.DataAccess.EF.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_date")
                         .HasDefaultValueSql("now() at time zone 'utc'");
 
-                    b.Property<decimal>("Discount")
+                    b.Property<decimal?>("Discount")
                         .HasColumnType("numeric")
                         .HasColumnName("discount");
 
                     b.Property<string>("Images")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("images");
 
@@ -655,7 +783,9 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("product_id");
 
                     b.Property<int>("RecordStatus")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(1)
                         .HasColumnName("record_status");
 
                     b.Property<string>("Slug")
@@ -668,8 +798,10 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasColumnName("status");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_date");
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_date")
+                        .HasDefaultValueSql("now() at time zone 'utc'");
 
                     b.HasKey("Id")
                         .HasName("pk_variants");
@@ -680,23 +812,183 @@ namespace ClothingShop.DataAccess.EF.Migrations
                     b.ToTable("variants", (string)null);
                 });
 
-            modelBuilder.Entity("PersonPromotion", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
-                    b.Property<Guid>("UsedPersonsId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("used_persons_id");
+                        .HasColumnName("id");
 
-                    b.Property<Guid>("UsedPromotionsId")
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text")
+                        .HasColumnName("concurrency_stamp");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("normalized_name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_asp_net_roles");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text")
+                        .HasColumnName("claim_type");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text")
+                        .HasColumnName("claim_value");
+
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("uuid")
-                        .HasColumnName("used_promotions_id");
+                        .HasColumnName("role_id");
 
-                    b.HasKey("UsedPersonsId", "UsedPromotionsId")
-                        .HasName("pk_person_promotion");
+                    b.HasKey("Id")
+                        .HasName("pk_asp_net_role_claims");
 
-                    b.HasIndex("UsedPromotionsId")
-                        .HasDatabaseName("ix_person_promotion_used_promotions_id");
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_asp_net_role_claims_role_id");
 
-                    b.ToTable("person_promotion", (string)null);
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text")
+                        .HasColumnName("claim_type");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text")
+                        .HasColumnName("claim_value");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_asp_net_user_claims");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_asp_net_user_claims_user_id");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text")
+                        .HasColumnName("login_provider");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("text")
+                        .HasColumnName("provider_key");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("text")
+                        .HasColumnName("provider_display_name");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("LoginProvider", "ProviderKey")
+                        .HasName("pk_asp_net_user_logins");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_asp_net_user_logins_user_id");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("role_id");
+
+                    b.HasKey("UserId", "RoleId")
+                        .HasName("pk_asp_net_user_roles");
+
+                    b.HasIndex("RoleId")
+                        .HasDatabaseName("ix_asp_net_user_roles_role_id");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text")
+                        .HasColumnName("login_provider");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text")
+                        .HasColumnName("value");
+
+                    b.HasKey("UserId", "LoginProvider", "Name")
+                        .HasName("pk_asp_net_user_tokens");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("ApplicationUserPromotion", b =>
+                {
+                    b.HasOne("ClothingShop.Model.Promotion", null)
+                        .WithMany()
+                        .HasForeignKey("UsedPromotionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_application_user_promotion_promotions_used_promotions_id");
+
+                    b.HasOne("ClothingShop.Model.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsedUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_application_user_promotion_users_used_users_id");
                 });
 
             modelBuilder.Entity("ClothingShop.Model.AttributeValue", b =>
@@ -722,14 +1014,14 @@ namespace ClothingShop.DataAccess.EF.Migrations
 
             modelBuilder.Entity("ClothingShop.Model.Cart", b =>
                 {
-                    b.HasOne("ClothingShop.Model.Person", "Person")
+                    b.HasOne("ClothingShop.Model.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("PersonId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_carts_persons_person_id");
+                        .HasConstraintName("fk_carts_users_user_id");
 
-                    b.Navigation("Person");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ClothingShop.Model.CartItem", b =>
@@ -754,44 +1046,40 @@ namespace ClothingShop.DataAccess.EF.Migrations
                     b.HasOne("ClothingShop.Model.Comment", "ParentComment")
                         .WithMany()
                         .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("fk_comments_comments_parent_id");
-
-                    b.HasOne("ClothingShop.Model.Person", "Person")
-                        .WithMany()
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_comments_persons_person_id");
 
                     b.HasOne("ClothingShop.Model.Product", null)
                         .WithMany("Comments")
                         .HasForeignKey("ProductId")
                         .HasConstraintName("fk_comments_products_product_id");
 
+                    b.HasOne("ClothingShop.Model.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_comments_users_user_id");
+
                     b.Navigation("ParentComment");
 
-                    b.Navigation("Person");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ClothingShop.Model.Order", b =>
                 {
-                    b.HasOne("ClothingShop.Model.Person", "Person")
-                        .WithMany()
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_orders_persons_person_id");
-
                     b.HasOne("ClothingShop.Model.Promotion", "Promotion")
                         .WithMany()
                         .HasForeignKey("PromotionId")
                         .HasConstraintName("fk_orders_promotions_promotion_id");
 
-                    b.Navigation("Person");
+                    b.HasOne("ClothingShop.Model.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("fk_orders_users_user_id");
 
                     b.Navigation("Promotion");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ClothingShop.Model.OrderItem", b =>
@@ -806,6 +1094,11 @@ namespace ClothingShop.DataAccess.EF.Migrations
 
             modelBuilder.Entity("ClothingShop.Model.Product", b =>
                 {
+                    b.HasOne("ClothingShop.Model.ApplicationUser", null)
+                        .WithMany("FavoriteProducts")
+                        .HasForeignKey("ApplicationUserId")
+                        .HasConstraintName("fk_products_users_application_user_id");
+
                     b.HasOne("ClothingShop.Model.Brand", "Brand")
                         .WithMany("Products")
                         .HasForeignKey("BrandId")
@@ -819,11 +1112,6 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_products_categories_category_id");
-
-                    b.HasOne("ClothingShop.Model.Person", null)
-                        .WithMany("FavoriteProducts")
-                        .HasForeignKey("PersonId")
-                        .HasConstraintName("fk_products_persons_person_id");
 
                     b.Navigation("Brand");
 
@@ -840,21 +1128,66 @@ namespace ClothingShop.DataAccess.EF.Migrations
                         .HasConstraintName("fk_variants_products_product_id");
                 });
 
-            modelBuilder.Entity("PersonPromotion", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("ClothingShop.Model.Person", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
-                        .HasForeignKey("UsedPersonsId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_person_promotion_persons_used_persons_id");
+                        .HasConstraintName("fk_asp_net_role_claims_asp_net_roles_role_id");
+                });
 
-                    b.HasOne("ClothingShop.Model.Promotion", null)
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+                {
+                    b.HasOne("ClothingShop.Model.ApplicationUser", null)
                         .WithMany()
-                        .HasForeignKey("UsedPromotionsId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_person_promotion_promotions_used_promotions_id");
+                        .HasConstraintName("fk_asp_net_user_claims_asp_net_users_user_id");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+                {
+                    b.HasOne("ClothingShop.Model.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_logins_asp_net_users_user_id");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_roles_asp_net_roles_role_id");
+
+                    b.HasOne("ClothingShop.Model.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_roles_asp_net_users_user_id");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+                {
+                    b.HasOne("ClothingShop.Model.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_asp_net_user_tokens_asp_net_users_user_id");
+                });
+
+            modelBuilder.Entity("ClothingShop.Model.ApplicationUser", b =>
+                {
+                    b.Navigation("FavoriteProducts");
                 });
 
             modelBuilder.Entity("ClothingShop.Model.Attribute", b =>
@@ -880,11 +1213,6 @@ namespace ClothingShop.DataAccess.EF.Migrations
             modelBuilder.Entity("ClothingShop.Model.Order", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("ClothingShop.Model.Person", b =>
-                {
-                    b.Navigation("FavoriteProducts");
                 });
 
             modelBuilder.Entity("ClothingShop.Model.Product", b =>

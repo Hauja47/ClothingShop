@@ -14,7 +14,7 @@ namespace ClothingShop.Model
 
         public decimal Total { get; set; }
 
-        public decimal Discount { get; set; }
+        public decimal? Discount { get; set; }
 
         public decimal Balance { get; set; }
     }

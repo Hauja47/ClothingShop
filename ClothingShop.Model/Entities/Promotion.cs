@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace ClothingShop.Model
     {
         public string Code { get; set; }
 
-        public string Condition { get; set; }
+        public string? Condition { get; set; }
 
         public decimal? DiscountValue { get; set; }
 
@@ -27,8 +28,8 @@ namespace ClothingShop.Model
         //public virtual IEnumerable<Guid> UsedUserId { get; set; }
 
 
-        public Person? Person;
+        public ApplicationUser? User;
 
-        public IEnumerable<Person> UsedPersons { get; set; }
+        public IEnumerable<ApplicationUser> UsedUsers { get; set; }
     }
 }
