@@ -120,7 +120,7 @@ namespace ClothingShop.Server.Controllers
             }
         }
 
-        [HttpPatch("Attribute")]
+        [HttpPut("Attribute")]
         public async Task<IActionResult> UpdateAttribute([FromBody] AttributeUpdateRequest request)
         {
             try

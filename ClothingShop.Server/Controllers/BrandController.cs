@@ -121,7 +121,7 @@ namespace ClothingShop.Server.Controllers
             }
         }
 
-        [HttpPatch("Brand")]
+        [HttpPut("Brand")]
         public async Task<IActionResult> UpdateBrand([FromBody] BrandUpdateRequest request)
         {
             try

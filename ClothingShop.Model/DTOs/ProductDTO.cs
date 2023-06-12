@@ -17,6 +17,8 @@ namespace ClothingShop.Model.DTO
         public decimal? Rating { get; set; }
 
         public string? Description { get; set; }
+
+        public List<VariantRequest> Variants { get; set; } 
     }
 
     public class ProductUpdateRequest : ProductRequest

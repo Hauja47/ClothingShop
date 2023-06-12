@@ -9,7 +9,7 @@ namespace ClothingShop.Model.DTO
 {
     public class VariantRequest
     {
-        public Guid ProductId { get; set; }
+        //public Guid? ProductId { get; set; }
 
         public decimal Price { get; set; }
 
@@ -19,7 +19,9 @@ namespace ClothingShop.Model.DTO
 
         public string Slug { get; set; }
 
-        public List<Guid> AttributeValueIds { get; set; }
+        //public List<Guid> AttributeValueIds { get; set; }
+
+        public List<AttributeValueRequest> AttributeValues { get; set; }
     }
 
     public class VariantUpdateRequest : VariantRequest

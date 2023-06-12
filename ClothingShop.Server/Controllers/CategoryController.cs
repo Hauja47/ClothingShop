@@ -120,7 +120,7 @@ namespace ClothingShop.Server.Controllers
             }
         }
 
-        [HttpPatch("Category")]
+        [HttpPut("Category")]
         public async Task<IActionResult> UpdateCategory([FromBody] CategoryUpdateRequest request)
         {
             try

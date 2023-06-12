@@ -21,12 +21,22 @@ namespace ClothingShop.DataAccess.Repositories
         public AttributeRepository Attribute => this.attribute ??= new AttributeRepository(context);
         private AttributeRepository attribute;
 
+        public AttributeValueRepository AttributeValue => this.attributeValue ??= new AttributeValueRepository(context);
+        private AttributeValueRepository attributeValue;
+
+        public VariantRepository Variant => this.variant ??= new VariantRepository(context);
+        private VariantRepository variant;
 
         private ShopContext context;
 
         public Repositories(ShopContext context)
         {
             this.context = context;
+        }
+
+        public Task SaveChanges()
+        {
+            return context.SaveChanges();
         }
     }
 }
